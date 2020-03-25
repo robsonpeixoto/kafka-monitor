@@ -23,5 +23,9 @@ ADD config/kafka-monitor.properties config/kafka-monitor.properties
 ADD config/log4j.properties config/log4j.properties
 ADD docker/kafka-monitor-docker-entry.sh kafka-monitor-docker-entry.sh
 ADD webapp/ webapp/
+ADD config/prometheus-exporter.yaml prometheus/prometheus-exporter.yaml
+ADD https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.12.0/jmx_prometheus_javaagent-0.12.0.jar prometheus/jmx_prometheus_javaagent.jar
+
+ENV KAFKA_OPTS "-javaagent:/opt/kafka-monitor/prometheus/jmx_prometheus_javaagent.jar=8080:/opt/kafka-monitor/prometheus/jmx_prometheus_javaagent.jar"
 
 CMD ["/opt/kafka-monitor/kafka-monitor-docker-entry.sh"]
